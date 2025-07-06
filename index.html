@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фея Зеркал - Хранительница отражений</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;700&display=swap');
+        
+        :root {
+            --main-bg: #0a0a12;
+            --mirror-silver: #c0c0d0;
+            --mirror-blue: #a0a0ff;
+            --mirror-dark: #1a1a2e;
+            --text-light: #e0e0e0;
+            --text-silver: #b0b0ff;
+            --crack-color: rgba(255,255,255,0.3);
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--main-bg);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(100,100,150,0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(100,100,150,0.1) 0%, transparent 20%);
+        }
+        
+        /* Анимация трещин */
+        .crack {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+            background-image: 
+                linear-gradient(45deg, transparent 65%, var(--crack-color) 65%, transparent 70%),
+                linear-gradient(-45deg, transparent 65%, var(--crack-color) 65%, transparent 70%),
+                linear-gradient(45deg, transparent 75%, var(--crack-color) 75%, transparent 80%),
+                linear-gradient(-45deg, transparent 75%, var(--crack-color) 75%, transparent 80%);
+            background-size: 100px 100px;
+            opacity: 0.1;
+            animation: crackMove 60s infinite linear;
+        }
+        
+        @keyframes crackMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 1000px 1000px; }
+        }
+        .mirror-shine {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.2) 0%, transparent 10%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.2) 0%, transparent 10%);
+            animation: shinePulse 8s infinite alternate;
+            z-index: -1;
+        }
+        
+        @keyframes shinePulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+        
+        
+        header {
+            background: linear-gradient(90deg, rgba(20,20,30,0.9) 0%, rgba(50,50,70,0.9) 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--mirror-blue);
+            box-shadow: 0 0 30px rgba(100,100,150,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(90deg, transparent 65%, rgba(160,160,255,0.1) 65%, transparent 70%),
+                linear-gradient(-90deg, transparent 65%, rgba(160,160,255,0.1) 65%, transparent 70%);
+            background-size: 50px 50px;
+            animation: mirrorLines 20s infinite linear;
+        }
+        
+        @keyframes mirrorLines {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 100px; }
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin: 0;
+            background: linear-gradient(90deg, #c0c0ff, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(160,160,255,0.5);
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+            animation: titleGlow 3s infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 15px rgba(160,160,255,0.5); }
+            100% { text-shadow: 0 0 25px rgba(200,200,255,0.8); }
+        }
+        
+        .tagline {
+            font-style: italic;
+            color: var(--text-silver);
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 5px rgba(160,160,255,0.3);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: rgba(10,10,20,0.95);
+            padding: 1.2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(100,100,150,0.3);
+        }
+        
+        nav a {
+            color: var(--text-silver);
+            text-decoration: none;
+            margin: 0 1.8rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            transition: all 0.4s ease;
+            font-weight: 300;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--mirror-blue);
+            transition: all 0.4s ease;
+        }
+        
+        nav a:hover {
+            color: #ffffff;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .section {
+            background-color: rgba(20,20,40,0.85);
+            border-radius: 10px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(100,100,150,0.3);
+            box-shadow: 0 0 20px rgba(100,100,150,0.25);
+            backdrop-filter: blur(3px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 65%, rgba(160,160,255,0.05) 65%, transparent 70%),
+                linear-gradient(-45deg, transparent 65%, rgba(160,160,255,0.05) 65%, transparent 70%);
+            background-size: 30px 30px;
+            animation: sectionPattern 40s infinite linear;
+            pointer-events: none;
+        }
+        
+        @keyframes sectionPattern {
+            0% { background-position: 0 0; }
+            100% { background-position: 600px 600px; }
+        }
+        
+        .section-title {
+            color: var(--text-silver);
+            border-bottom: 1px solid rgba(100,100,150,0.5);
+            padding-bottom: 0.8rem;
+            margin-top: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: var(--mirror-blue);
+            animation: titleUnderline 3s infinite alternate;
+        }
+        
+        @keyframes titleUnderline {
+            0% { width: 100px; opacity: 0.7; }
+            100% { width: 150px; opacity: 1; }
+        }
+        
+        .fairy-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(160,160,255,0.3);
+            animation: imageFloat 6s infinite alternate ease-in-out;
+        }
+        
+        .fairy-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .fairy-image-container:hover .fairy-image {
+            transform: scale(1.03);
+        }
+        
+        .fairy-image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(160,160,255,0.1) 0%, transparent 50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .fairy-image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 65%, rgba(255,255,255,0.1) 65%, transparent 70%),
+                linear-gradient(-45deg, transparent 65%, rgba(255,255,255,0.1) 65%, transparent 70%);
+            background-size: 50px 50px;
+            animation: mirrorLines 20s infinite linear;
+            pointer-events: none;
+        }
+        
+        @keyframes imageFloat {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+        
+        .mirror-text {
+            background: linear-gradient(90deg, rgba(160,160,255,0.1), rgba(160,160,255,0.05), rgba(160,160,255,0.1));
+            padding: 1.5rem;
+            border-left: 3px solid var(--mirror-blue);
+            font-style: italic;
+            border-radius: 4px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(160,160,255,0.1);
+        }
+        
+        .mirror-text::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: textShine 4s infinite;
+        }
+        
+        @keyframes textShine {
+            100% { left: 100%; }
+        }
+        
+        
+        .mirror-break {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            right: 5%;
+            bottom: 5%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23c0c0d0"/><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="%23f0f0ff"/></svg>') center/cover;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(160,160,255,0.5);
+            opacity: 0.7;
+            z-index: -1;
+            animation: mirrorBreak 15s infinite;
+            transform-style: preserve-3d;
+        }
+        
+        @keyframes mirrorBreak {
+            0%, 85% { 
+                transform: rotate(0deg) scale(1);
+                opacity: 0.7;
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            90% { 
+                transform: rotate(1deg) scale(1.02);
+                opacity: 0.8;
+            }
+            95% { 
+                transform: rotate(-1deg) scale(1.02);
+                opacity: 0.9;
+            }
+            100% { 
+                transform: rotate(0deg) scale(1);
+                opacity: 0.7;
+                clip-path: polygon(0 0, 100% 0, 90% 90%, 10% 90%);
+            }
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .power-card {
+            background: rgba(30,30,60,0.7);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid rgba(100,100,150,0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .power-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(160,160,255,0.2);
+            border-color: var(--mirror-blue);
+        }
+        
+        .power-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 65%, rgba(160,160,255,0.05) 65%, transparent 70%),
+                linear-gradient(-45deg, transparent 65%, rgba(160,160,255,0.05) 65%, transparent 70%);
+            background-size: 30px 30px;
+            animation: sectionPattern 40s infinite linear;
+            pointer-events: none;
+        }
+        
+        .power-title {
+            color: var(--mirror-blue);
+            font-family: 'Playfair Display', serif;
+            margin-top: 0;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .power-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 1px;
+            background: var(--mirror-blue);
+            animation: powerUnderline 3s infinite alternate;
+        }
+        
+        @keyframes powerUnderline {
+            0% { width: 50%; }
+            100% { width: 70%; }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                padding: 0.8rem;
+            }
+            
+            nav a {
+                margin: 0.3rem;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .powers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="crack"></div>
+    <div class="mirror-shine"></div>
+    <div class="mirror-break"></div>
+    
+    <header>
+        <h1>Фея Зеркал</h1>
+        <p class="tagline">"Я лишь показываю то, что ты отказываешься видеть в себе..."</p>
+    </header>
+    
+    <nav>
+        <a href="#about">О Фее</a>
+        <a href="#appearance">Внешность</a>
+        <a href="#powers">Силы</a>
+        <a href="#character">Характер</a>
+    </nav>
+    
+    <div class="main-content">
+        <section id="about" class="section">
+            <h2 class="section-title">О Фее Зеркал</h2>
+            
+            <div class="fairy-image-container">
+                <!-- Единственное фото Феи -->
+                <img src="fairy-main.jpg" alt="Фея Зеркал" class="fairy-image">
+            </div>
+            
+            <p>Фея Зеркал — загадочное существо, обитающее в мире отражений. Она не принадлежит ни свету, ни тьме, являясь хранителем баланса между правдой и иллюзией.</p>
+            
+            <div class="mirror-text">
+                "Я не создаю страхи — я лишь показываю то, что уже есть внутри вас. Примите свои отражения, и они перестанут быть вашими врагами."
+            </div>
+            
+            <p>Её сущность — это вечное отражение, зеркало, в котором каждый видит то, что боится признать в себе. Она не судит, не наказывает — лишь показывает.</p>
+        </section>
+        
+        <section id="appearance" class="section">
+            <h2 class="section-title">Внешность</h2>
+            
+            <p>Фея выглядит словно тень, состоящая из множества мельчайших блестящих осколков зеркал, переливающихся холодным серебристым светом. Её тело стройное и гибкое, словно вода, с прозрачной кожей, через которую видны мерцающие отражения окружающего мира и лиц, скрывающихся в глубине зеркал.</p>
+            
+            <div class="mirror-text">
+                "Моя красота — это отражение ваших мыслей. Что вы видите, глядя на меня?"
+            </div>
+            
+            <h3>Костюм</h3>
+            <p>Костюм сшит из тонких, словно стекло, пластин, переливающихся и меняющих форму в зависимости от настроения феи. Он серебристого цвета с вкраплениями тёмного обсидиана, которые словно «проглатывают» свет. На плечах и по краям — острые, зеркальные «крылья», которые она может складывать или распахивать, создавая эффект отражения пространства вокруг.</p>
+        </section>
+        
+        <section id="powers" class="section">
+            <h2 class="section-title">Силы и способности</h2>
+            
+            <div class="powers-grid">
+                <div class="power-card">
+                    <h3 class="power-title">Отражение эмоций</h3>
+                    <p>Способна точно прочитывать эмоциональное состояние человека и передавать его через отражения в зеркалах.</p>
+                </div>
+                
+                <div class="power-card">
+                    <h3 class="power-title">Манипуляция отражениями</h3>
+                    <p>Может менять вид отражений в зеркалах, создавая иллюзии, которые запутывают или открывают правду.</p>
+                </div>
+                
+                <div class="power-card">
+                    <h3 class="power-title">Портал зеркал</h3>
+                    <p>Умеет перемещаться и перемещать других через зеркальные поверхности.</p>
+                </div>
+            </div>
+            
+            <div class="mirror-text">
+                "Ты думаешь, что контролируешь свои страхи? Давай проверим..."
+            </div>
+            
+            <h3>Суперсила: Отзеркаливание страхов</h3>
+            <p>Может заставить человека увидеть свои глубокие, часто подавленные страхи в физической форме отражений. Эти страхи становятся реальны и могут воздействовать на сознание, вызывая как панику, так и трансформацию. Если человек принимает эти отражённые страхи, они затухают или исчезают, но если сопротивляется, страхи могут овладеть разумом, превращая жертву в пленника своих фобий.</p>
+        </section>
+        
+        <section id="character" class="section">
+            <h2 class="section-title">Характер</h2>
+            
+            <p>Фея Зеркал не является однозначно доброй или злой. Она справедливо отражает суть каждого, но её методы бывают безжалостны. С одной стороны, она помогает людям увидеть правду и столкнуться с собственными страхами для роста и освобождения, с другой — может усилить их страхи, играя на сомнениях и неуверенности, доводя до безумия или паралича от ужаса.</p>
+            
+            <div class="mirror-text">
+                "Я всего лишь зеркало. Если тебе не нравится то, что ты видишь, не сердись на отражение."
+            </div>
+            
+            <p>Она упрямая, интеллектуальная, слегка холодная и загадочная. Её сложный характер обычно путает окружающих. Она — не просто хранительница зеркал, это хранитель баланса между светом и тенью, между правдой и страхом в сердцах людей.</p>
+        </section>
+    </div>
+    
+    <footer>
+        <p>© 2025</p>
+        <p>7 отряд йоу</p>
+    </footer>
+</body>
+</html>
